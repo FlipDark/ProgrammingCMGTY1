@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class Movement : MonoBehaviour
 {
@@ -10,22 +11,23 @@ public class Movement : MonoBehaviour
     [SerializeField] private float maxSpeed;
     [SerializeField] private Collider col;
 
-    private float distToGround;
-
     // bools
     private bool pressedA = false;
     private bool pressedD = false;
     private bool pressedSpace = false;
 
+    // floats
+    private float distToGround;
     private void Start()
     {
-        distToGround = col.bounds.extents.y;
+        distToGround = col.bounds.extents.y + 0.1f;
     }
-
     void Update()
     {
         // Input:
         GetInput();
+
+        //Debug.Log(IsGrounded());
     }
 
     private void FixedUpdate()
@@ -50,11 +52,7 @@ public class Movement : MonoBehaviour
         if (pressedD) rb.AddForce(transform.right * sidewaySpeed);
 
         //constant movement forward
-        if (rb.velocity.z < maxSpeed)
-        {
-            rb.AddForce(transform.forward * forwardSpeed);
-            Debug.Log(rb.velocity.z);
-        }
+        if (rb.velocity.z < maxSpeed) rb.AddForce(transform.forward * forwardSpeed);
     }
     private void GetInput()
     {
@@ -72,6 +70,8 @@ public class Movement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0, 1);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -transform.up, out hit, distToGround) && hit.collider.tag == "Ground") return true;
+        else return false;
     }
 }

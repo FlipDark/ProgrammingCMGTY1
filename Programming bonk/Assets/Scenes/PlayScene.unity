@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &310290962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,8 +255,8 @@ GameObject:
   - component: {fileID: 384882501}
   - component: {fileID: 384882500}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Ground
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -533,7 +533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1222437452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1756137747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,6 +762,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3976712866415569778, guid: d67e14e30e090274d879e5107d3c556e,
+        type: 3}
+      propertyPath: distToGround
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6496237995838686554, guid: d67e14e30e090274d879e5107d3c556e,
         type: 3}
       propertyPath: m_Name
