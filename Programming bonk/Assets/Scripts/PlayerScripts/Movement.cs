@@ -35,8 +35,6 @@ public class Movement : MonoBehaviour
         // physics
         DoPhysics();
 
-        IsGrounded();
-
         // reset input
         ResetInput();
     }
