@@ -270,6 +270,11 @@ PrefabInstance:
       propertyPath: m_Depth
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3976712866415569778, guid: d67e14e30e090274d879e5107d3c556e,
+        type: 3}
+      propertyPath: jumpForce
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 6010097964048477733, guid: d67e14e30e090274d879e5107d3c556e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -295,6 +300,11 @@ PrefabInstance:
       propertyPath: livesDisplay
       value: 
       objectReference: {fileID: 1701046638}
+    - target: {fileID: 7207437165823263169, guid: d67e14e30e090274d879e5107d3c556e,
+        type: 3}
+      propertyPath: SpawnEveryXUnitsValue
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 8866444879003460713, guid: d67e14e30e090274d879e5107d3c556e,
         type: 3}
       propertyPath: m_LocalPosition.x
