@@ -1,28 +1,38 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public UnityEvent PlayerDeath;
-    [SerializeField] TMP_Text livesDisplay;
-    [SerializeField] private float lives = 3;
+    public UnityEvent PlayerDeath; // Unity event to trigger player death (like scene switching)
+    private GameManager gameManager; // Reference to the GameManager
+
+    private void Start()
+    {
+        // Get the GameManager reference
+        gameManager = GameManager.Instance;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle") Damage();
+        // Check if the player collides with an obstacle
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Damage(); // Call the Damage function when colliding with an obstacle
+        }
     }
 
     private void Damage()
     {
-        if (lives > 0)
+        if (gameManager != null)
         {
-            lives--;
-            livesDisplay.text = lives.ToString();
+            gameManager.LoseLife(); // Call LoseLife in GameManager to decrease lives and respawn
         }
-        
-        if (lives == 0)
+
+        // If lives reach 0 after losing a life, trigger the UnityEvent to switch scene
+        if (gameManager.CurrentLives <= 0)
         {
-            PlayerDeath?.Invoke();
+            Debug.Log("Player Death Triggered");
+            PlayerDeath?.Invoke(); // Invoke the UnityEvent for scene switching or game over logic
         }
     }
 }

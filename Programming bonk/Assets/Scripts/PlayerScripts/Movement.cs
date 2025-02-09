@@ -18,16 +18,16 @@ public class Movement : MonoBehaviour
 
     // floats
     private float distToGround;
+
     private void Start()
     {
         distToGround = col.bounds.extents.y + 0.1f;
     }
+
     void Update()
     {
         // Input:
         GetInput();
-
-        //Debug.Log(IsGrounded());
     }
 
     private void FixedUpdate()
@@ -38,6 +38,7 @@ public class Movement : MonoBehaviour
         // reset input
         ResetInput();
     }
+
     private void DoPhysics()
     {
         //jumping
@@ -52,12 +53,14 @@ public class Movement : MonoBehaviour
         //constant movement forward
         if (rb.velocity.z < maxSpeed) rb.AddForce(transform.forward * forwardSpeed);
     }
+
     private void GetInput()
     {
         if (Input.GetKey(KeyCode.A)) pressedA = true;
         if (Input.GetKey(KeyCode.D)) pressedD = true;
         if (Input.GetKeyDown(KeyCode.Space)) pressedSpace = true;
     }
+
     private void ResetInput()
     {
         pressedA = false;
@@ -65,11 +68,23 @@ public class Movement : MonoBehaviour
         pressedSpace = false;
     }
 
-
     private bool IsGrounded()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit, distToGround) && hit.collider.tag == "Ground") return true;
         else return false;
+    }
+
+    // New ResetMovement method
+    public void ResetPlayerMovement()
+    {
+        // Reset the player's velocity (stopping any ongoing movement)
+        rb.velocity = Vector3.zero;
+
+        // Reset any forces (if needed, to prevent continued movement)
+        rb.angularVelocity = Vector3.zero; // Reset angular velocity if applicable
+
+        // Reset input states
+        ResetInput();
     }
 }

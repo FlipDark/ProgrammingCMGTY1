@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Ground
+  - Collectable
   layers:
   - Default
   - TransparentFX
