@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text livesText; // Lives text (Drag from UI)
 
     private Queue<GameObject> activeRoads = new Queue<GameObject>(); // Stores active roads
-    private float spawnOffset = 0f; // Position for next road
+    public float spawnOffset = 0f; // Position for next road
     private static int score = 0; // Player score
 
 
@@ -72,9 +72,11 @@ public class GameManager : MonoBehaviour
 
         if (currentLives <= 0)
         {
+            PlayerPrefs.SetInt("FinalScore", score);
+            PlayerPrefs.Save();
+            
             // Player has no lives left, handle game over (optional)
             Debug.Log("Game Over");
-            // You can add more logic for game over here, like showing a Game Over screen
         }
 
         UpdateLivesUI(); // Update the UI (now done in GameManager only)
@@ -108,23 +110,73 @@ public class GameManager : MonoBehaviour
 
     void SpawnObstaclesAndCollectibles(GameObject road)
     {
-        int numObstacles = Random.Range(1, 3); // Random obstacles per road
-        int numCollectibles = Random.Range(1, 2); // Random collectibles per road
+        int numObstacles = Random.Range(1, 5); // Random obstacles per road
+        int numCollectibles = Random.Range(1, 3); // Random collectibles per road
+        float minDistance = 5f; // Minimum distance between objects (obstacles & collectibles)
 
+        float roadZ = road.transform.position.z;
+        float roadStartZ = roadZ - (roadLength / 2);  // Adjusted for center pivot
+        float roadEndZ = roadZ + (roadLength / 2);    // Adjusted for center pivot
+
+        List<Vector3> usedPositions = new List<Vector3>(); // Store used positions for obstacles & collectibles
+
+        // Spawn Obstacles
         for (int i = 0; i < numObstacles; i++)
         {
             GameObject obstacle = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
-            Vector3 pos = new Vector3(Random.Range(-2.5f, 2.5f), 0.5f, road.transform.position.z + Random.Range(1f, roadLength - 1f));
-            Instantiate(obstacle, pos, Quaternion.identity);
+            Vector3 pos;
+            Quaternion rotation = Quaternion.identity; // Default rotation
+
+            // Ensure spacing between obstacles and other objects
+            int attempts = 10;
+            do
+            {
+                pos = new Vector3(
+                    Random.Range(-2.5f, 2.5f),
+                    0.5f,
+                    Random.Range(roadStartZ + 1f, roadEndZ - 1f)
+                );
+                attempts--;
+            } while (usedPositions.Exists(p => Vector3.Distance(p, pos) < minDistance) && attempts > 0);
+
+            usedPositions.Add(pos); // Store the new obstacle position
+
+            // Special rotation for specific obstacles
+            if (obstacle.name == "Obstacle3")
+            {
+                rotation = Quaternion.Euler(0, 0, 90);
+                pos.y = 2.0f;
+            }
+
+            Instantiate(obstacle, pos, rotation);
         }
 
+        // Spawn Collectibles with spacing
         for (int i = 0; i < numCollectibles; i++)
         {
             GameObject collectible = collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)];
-            Vector3 pos = new Vector3(Random.Range(-2.5f, 2.5f), 1f, road.transform.position.z + Random.Range(1f, roadLength - 1f));
+            Vector3 pos;
+
+            int attempts = 10;
+            do
+            {
+                pos = new Vector3(
+                    Random.Range(-2.5f, 2.5f),
+                    1f,
+                    Random.Range(roadStartZ + 1f, roadEndZ - 1f)
+                );
+                attempts--;
+            } while (usedPositions.Exists(p => Vector3.Distance(p, pos) < minDistance) && attempts > 0);
+
+            usedPositions.Add(pos); // Store the new collectible position
+
             Instantiate(collectible, pos, Quaternion.identity);
         }
     }
+
+
+
+
 
     public void CollectItem()
     {

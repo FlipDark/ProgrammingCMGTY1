@@ -152,7 +152,6 @@ GameObject:
   - component: {fileID: 8617316447262302485}
   - component: {fileID: 6726482338768400834}
   - component: {fileID: 3976712866415569778}
-  - component: {fileID: 7207437165823263169}
   - component: {fileID: 6839709423079445471}
   m_Layer: 0
   m_Name: Player
@@ -302,8 +301,6 @@ MonoBehaviour:
           m_StringArgument: EndScene
           m_BoolArgument: 0
         m_CallState: 2
-  livesDisplay: {fileID: 0}
-  lives: 3
 --- !u!114 &3976712866415569778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,21 +319,6 @@ MonoBehaviour:
   jumpForce: 400
   maxSpeed: 5
   col: {fileID: 91200016218734147}
---- !u!114 &7207437165823263169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6496237995838686554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10b8de0e83c159409f68125be8f6520, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roadPrefab: {fileID: 7277856891066267372, guid: 2c93864901f20ae45b0cf88213c1d495,
-    type: 3}
-  SpawnEveryXUnitsValue: 50
 --- !u!114 &6839709423079445471
 MonoBehaviour:
   m_ObjectHideFlags: 0
